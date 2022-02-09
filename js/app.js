@@ -15,6 +15,11 @@ const sliceArray = [];
 let count = 0;
 let videoDimensions = { width: 640, height: 360 };
 
+const offscreenCanvas = document.createElement("canvas");
+offscreenCanvas.width = videoDimensions.width;
+offscreenCanvas.height = videoDimensions.height;
+const osCtx = offscreenCanvas.getContext("2d", { alpha: false });
+
 // set up controls, webcam etc
 export function setup() {
   // hide controls by default and if app is right clicked
@@ -50,7 +55,7 @@ export function setup() {
 // draw loop
 export function draw() {
   const frameCanvas = getFlippedVideoCanvas(video, videoDimensions, count);
-  count += 1;
+  count += 0.25;
 
   if (artCanvas.width !== frameCanvas.width) {
     artCanvas.width = frameCanvas.width;
@@ -69,11 +74,11 @@ export function draw() {
 }
 
 function drawTimeSlicedCanvas(targ, sliceArray, videoDimensions) {
-  const ctx = targ.getContext("2d");
+  const ctx = targ.getContext("2d", { alpha: false });
   const sliceHeight = videoDimensions.height / sliceArray.length;
 
   for (let i = 0; i < sliceArray.length; i++) {
-    ctx.drawImage(
+    osCtx.drawImage(
       sliceArray[i],
       0,
       i * sliceHeight,
@@ -85,4 +90,6 @@ function drawTimeSlicedCanvas(targ, sliceArray, videoDimensions) {
       sliceHeight
     );
   }
+
+  ctx.drawImage(offscreenCanvas, 0, 0);
 }

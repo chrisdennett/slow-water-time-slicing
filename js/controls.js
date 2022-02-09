@@ -7,7 +7,7 @@ const defaultParams = {
     min: 2,
     max: 1000,
     step: 1,
-    value: 200,
+    value: 300,
   },
   isReflected: {
     type: "checkbox",
