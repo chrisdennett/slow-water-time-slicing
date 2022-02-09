@@ -13,7 +13,10 @@ const params = initControls(controls);
 
 // global defaults
 let lastDrawTime = null;
+let totalSlices = 100;
+const sliceArray = [];
 let count = 0;
+let sliceHeight;
 
 // set up controls, webcam etc
 export function setup() {
@@ -63,28 +66,28 @@ export function draw() {
   const frameCanvas = getFlippedVideoCanvas(video, count);
   count += 1;
 
-  drawRoundSlitScan(frameCanvas, drawSlice, params);
+  sliceArray.unshift(frameCanvas);
+  sliceHeight = frameCanvas.height / sliceArray.length;
 
-  window.requestAnimationFrame(draw);
-}
-
-function drawRoundSlitScan(frameCanvas, drawSlice, params) {
-  const canvasHeight = document.body.clientHeight;
-
-  if (
-    artCanvas.height !== parseInt(canvasHeight) ||
-    artCanvas.width !== parseInt(canvasHeight)
-  ) {
-    const container = document.getElementById("container");
-    container.style.position = "absolute";
-    artCanvas.height = canvasHeight;
-    artCanvas.width = canvasHeight;
+  if (sliceArray.length >= totalSlices) {
+    sliceArray.pop();
   }
 
-  drawRoundSlitScanToCanvas({
-    src: frameCanvas,
-    target: artCanvas,
-    drawSlice,
-    params,
-  });
+  const ctx = artCanvas.getContext("2d");
+
+  for (let i = 0; i < sliceArray.length; i++) {
+    ctx.drawImage(
+      sliceArray[i],
+      0,
+      i * sliceHeight,
+      frameCanvas.width,
+      sliceHeight,
+      0,
+      i * sliceHeight,
+      frameCanvas.width,
+      sliceHeight
+    );
+  }
+
+  window.requestAnimationFrame(draw);
 }

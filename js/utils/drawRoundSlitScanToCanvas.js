@@ -32,14 +32,16 @@ function drawLiveWebcamSectionInMiddle({ target, src, sliceSize, drawSlice }) {
 
   if (drawSlice) {
     ctx.save();
+    ctx.translate(centerX, centerY);
+    // source coords aren't affected by translated, but targ are
     ctx.drawImage(
       target,
       centerX - sideLength / 2,
       0,
       sideLength,
       centerY - sideLength,
-      centerX - sideLength / 2,
-      0 - sliceSize,
+      0 - sideLength / 2,
+      0 - (centerY + sliceSize),
       sideLength,
       centerY - sideLength
     );
