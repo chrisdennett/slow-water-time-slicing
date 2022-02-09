@@ -1,7 +1,7 @@
-export function getFlippedVideoCanvas(video, count) {
+export function getFlippedVideoCanvas(video, videoDimensions, count) {
   const frameCanvas = document.createElement("canvas");
-  frameCanvas.width = 320;
-  frameCanvas.height = 240;
+  frameCanvas.width = videoDimensions.width;
+  frameCanvas.height = videoDimensions.height;
   const frameCtx = frameCanvas.getContext("2d");
   frameCtx.translate(frameCanvas.width, 0);
   frameCtx.scale(-1, 1);

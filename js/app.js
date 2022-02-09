@@ -1,4 +1,3 @@
-import { drawRoundSlitScanToCanvas } from "./utils/drawRoundSlitScanToCanvas.js";
 import { getFlippedVideoCanvas } from "./utils/getFlippedVideoCanvas.js";
 import { initControls } from "./controls.js";
 
@@ -17,6 +16,7 @@ let totalSlices = 100;
 const sliceArray = [];
 let count = 0;
 let sliceHeight;
+const videoDimensions = { width: 1280, height: 720 };
 
 // set up controls, webcam etc
 export function setup() {
@@ -39,7 +39,7 @@ export function setup() {
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({
-        video: { width: 320, height: 240 },
+        video: videoDimensions,
       })
       .then(function (stream) {
         video.srcObject = stream;
@@ -52,42 +52,40 @@ export function setup() {
 
 // draw loop
 export function draw() {
-  const { msPerFrame } = params;
-
-  const timeStamp = Date.now();
-
-  let drawSlice = false;
-
-  if (!lastDrawTime || timeStamp - lastDrawTime >= msPerFrame.value) {
-    lastDrawTime = timeStamp;
-    drawSlice = true;
-  }
-
-  const frameCanvas = getFlippedVideoCanvas(video, count);
+  const frameCanvas = getFlippedVideoCanvas(video, videoDimensions, count);
   count += 1;
 
+  if (artCanvas.width !== frameCanvas.width) {
+    artCanvas.width = frameCanvas.width;
+    artCanvas.height = frameCanvas.height;
+  }
+
   sliceArray.unshift(frameCanvas);
-  sliceHeight = frameCanvas.height / sliceArray.length;
 
   if (sliceArray.length >= totalSlices) {
     sliceArray.pop();
   }
 
-  const ctx = artCanvas.getContext("2d");
+  drawTimeSlicedCanvas(artCanvas, sliceArray, videoDimensions);
+
+  window.requestAnimationFrame(draw);
+}
+
+function drawTimeSlicedCanvas(targ, sliceArray, videoDimensions) {
+  const ctx = targ.getContext("2d");
+  const sliceHeight = videoDimensions.height / sliceArray.length;
 
   for (let i = 0; i < sliceArray.length; i++) {
     ctx.drawImage(
       sliceArray[i],
       0,
       i * sliceHeight,
-      frameCanvas.width,
+      videoDimensions.width,
       sliceHeight,
       0,
       i * sliceHeight,
-      frameCanvas.width,
+      videoDimensions.width,
       sliceHeight
     );
   }
-
-  window.requestAnimationFrame(draw);
 }
