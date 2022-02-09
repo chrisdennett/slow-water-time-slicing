@@ -50,25 +50,6 @@ export function setup() {
 
 // draw loop
 export function draw() {
-  if (videoDimensions.height !== params.videoHeight.value) {
-    const hToWRatio = 1.77778;
-    videoDimensions.height = params.videoHeight.value;
-    videoDimensions.width = params.videoHeight.value * hToWRatio;
-
-    if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({
-          video: videoDimensions,
-        })
-        .then(function (stream) {
-          video.srcObject = stream;
-        })
-        .catch(function (error) {
-          console.log("video error: ", error);
-        });
-    }
-  }
-
   const frameCanvas = getFlippedVideoCanvas(video, videoDimensions, count);
   count += 1;
 
@@ -79,8 +60,8 @@ export function draw() {
 
   sliceArray.unshift(frameCanvas);
 
-  if (sliceArray.length >= totalSlices) {
-    sliceArray.pop();
+  if (sliceArray.length >= params.totalSlices.value) {
+    sliceArray.length = params.totalSlices.value;
   }
 
   drawTimeSlicedCanvas(artCanvas, sliceArray, videoDimensions);

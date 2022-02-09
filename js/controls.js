@@ -9,27 +9,6 @@ const defaultParams = {
     step: 1,
     value: 100,
   },
-  videoHeight: {
-    type: "slider",
-    min: 240,
-    max: 720,
-    step: 1,
-    value: 600,
-  },
-  scanStartPos: {
-    type: "slider",
-    min: 0.01,
-    max: 1,
-    step: 0.01,
-    value: 1,
-  },
-  mountSize: {
-    type: "slider",
-    min: 0,
-    max: 0.5,
-    step: 0.001,
-    value: 0,
-  },
   isReflected: {
     type: "checkbox",
     value: false,

@@ -1,46 +1,15 @@
 body {
-  background-color: black;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
-
-  color: white;
   overflow: hidden;
-  /* background-image: url("/img/noisy.png"); */
-  /* background-image: url("/img/groovepaper.png"); */
-  /* background-image: url("/img/rough-diagonal.png"); */
 }
 
 #app {
-  /* border: inset 2px hsl(0deg, 0%, 80%); */
   position: relative;
-  /* border: 1px solid red; */
   line-height: 0;
-}
-
-.overlay {
-  position: absolute;
-  min-width: 100%;
-  min-height: 100%;
-  line-height: 0;
-}
-
-#shadowOverlay {
-  box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.9);
-}
-
-#textureOverlay {
-  /* background-image: url("/img/groovepaper.png"); */
-  background-image: url("/img/little-pluses.png");
-  opacity: 0.2;
 }
 
 canvas {
-  display: inline-block;
-  line-height: 0;
-  background-color: black;
+  height: 100vh;
+  object-fit: cover;
 }
 
 #controls {
@@ -60,6 +29,7 @@ canvas {
 .control {
   display: flex;
   align-items: center;
+  color: white;
 }
 
 .controlLabel {
