@@ -11,10 +11,9 @@ const video = document.querySelector("#videoElement");
 const params = initControls(controls);
 
 // global defaults
-let totalSlices = 100;
 const sliceArray = [];
 let count = 0;
-let videoDimensions = { width: 1280, height: 720 };
+let videoDimensions = { width: 800, height: 600 };
 
 // set up controls, webcam etc
 export function setup() {

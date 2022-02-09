@@ -5,9 +5,9 @@ const defaultParams = {
   totalSlices: {
     type: "slider",
     min: 2,
-    max: 500,
+    max: 1000,
     step: 1,
-    value: 100,
+    value: 200,
   },
   isReflected: {
     type: "checkbox",
