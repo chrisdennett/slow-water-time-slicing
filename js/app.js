@@ -13,7 +13,7 @@ const params = initControls(controls);
 // global defaults
 const sliceArray = [];
 let count = 0;
-let videoDimensions = { width: 480, height: 360 };
+let videoDimensions = { width: 640, height: 360 };
 
 // set up controls, webcam etc
 export function setup() {
