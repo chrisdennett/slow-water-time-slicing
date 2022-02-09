@@ -12,13 +12,18 @@ const params = initControls(controls);
 
 // global defaults
 const sliceArray = [];
-let count = 0;
+const minHue = 176;
+const maxHue = 257;
+let count = minHue;
+let inc = 0.5;
+
 let videoDimensions = { width: 640, height: 360 };
 
 const offscreenCanvas = document.createElement("canvas");
 offscreenCanvas.width = videoDimensions.width;
 offscreenCanvas.height = videoDimensions.height;
 const osCtx = offscreenCanvas.getContext("2d", { alpha: false });
+const ctx = artCanvas.getContext("2d", { alpha: false });
 
 // set up controls, webcam etc
 export function setup() {
@@ -55,7 +60,9 @@ export function setup() {
 // draw loop
 export function draw() {
   const frameCanvas = getFlippedVideoCanvas(video, videoDimensions, count);
-  count += 0.25;
+  count += inc;
+
+  if (count > maxHue || count < minHue) inc = -inc;
 
   if (artCanvas.width !== frameCanvas.width) {
     artCanvas.width = frameCanvas.width;
@@ -68,27 +75,18 @@ export function draw() {
     sliceArray.length = params.totalSlices.value;
   }
 
-  drawTimeSlicedCanvas(artCanvas, sliceArray, videoDimensions);
+  drawTimeSlicedCanvas(sliceArray, videoDimensions);
 
   window.requestAnimationFrame(draw);
 }
 
-function drawTimeSlicedCanvas(targ, sliceArray, videoDimensions) {
-  const ctx = targ.getContext("2d", { alpha: false });
-  const sliceHeight = videoDimensions.height / sliceArray.length;
+function drawTimeSlicedCanvas(sliceArray, videoDimensions) {
+  const h = videoDimensions.height / sliceArray.length;
+  const w = videoDimensions.width;
 
   for (let i = 0; i < sliceArray.length; i++) {
-    osCtx.drawImage(
-      sliceArray[i],
-      0,
-      i * sliceHeight,
-      videoDimensions.width,
-      sliceHeight,
-      0,
-      i * sliceHeight,
-      videoDimensions.width,
-      sliceHeight
-    );
+    const y = i * h;
+    osCtx.drawImage(sliceArray[i], 0, y, w, h, 0, y, w, h);
   }
 
   ctx.drawImage(offscreenCanvas, 0, 0);
