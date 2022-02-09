@@ -2,26 +2,19 @@
 export const globalState = { soundStarted: false };
 
 const defaultParams = {
-  sliceSize: {
+  totalSlices: {
     type: "slider",
-    min: 1,
-    max: 80,
+    min: 2,
+    max: 500,
     step: 1,
-    value: 1,
+    value: 100,
   },
-  msPerFrame: {
+  videoHeight: {
     type: "slider",
-    min: 1,
-    max: 80,
+    min: 240,
+    max: 720,
     step: 1,
-    value: 42,
-  },
-  canvasSize: {
-    type: "slider",
-    min: 50,
-    max: 800,
-    step: 1,
-    value: 800,
+    value: 600,
   },
   scanStartPos: {
     type: "slider",

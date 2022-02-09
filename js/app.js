@@ -11,18 +11,16 @@ const video = document.querySelector("#videoElement");
 const params = initControls(controls);
 
 // global defaults
-let lastDrawTime = null;
 let totalSlices = 100;
 const sliceArray = [];
 let count = 0;
-let sliceHeight;
-const videoDimensions = { width: 1280, height: 720 };
+let videoDimensions = { width: 1280, height: 720 };
 
 // set up controls, webcam etc
 export function setup() {
   // hide controls by default and if app is right clicked
   appElement.addEventListener("contextmenu", onAppRightClick);
-  controls.style.display = "none";
+  // controls.style.display = "none";
 
   // keyboard controls
   // document.addEventListener("keydown", onKeyDown);
@@ -52,6 +50,25 @@ export function setup() {
 
 // draw loop
 export function draw() {
+  if (videoDimensions.height !== params.videoHeight.value) {
+    const hToWRatio = 1.77778;
+    videoDimensions.height = params.videoHeight.value;
+    videoDimensions.width = params.videoHeight.value * hToWRatio;
+
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: videoDimensions,
+        })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (error) {
+          console.log("video error: ", error);
+        });
+    }
+  }
+
   const frameCanvas = getFlippedVideoCanvas(video, videoDimensions, count);
   count += 1;
 
