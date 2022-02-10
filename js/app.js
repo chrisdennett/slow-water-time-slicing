@@ -72,8 +72,8 @@ export function draw() {
 
   sliceArray.unshift(frameCanvas);
 
-  if (sliceArray.length >= params.totalSlices.value) {
-    sliceArray.length = params.totalSlices.value;
+  while (sliceArray.length > params.totalSlices.value) {
+    sliceArray.pop();
   }
 
   drawTimeSlicedCanvas(sliceArray, videoDimensions);
