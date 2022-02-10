@@ -1,5 +1,5 @@
 body {
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 #app {
@@ -48,6 +48,6 @@ canvas {
 /* HIDE THE VIDEO */
 #videoElement {
   background-color: #666;
-  /* display: none; */
+  display: none;
   position: absolute;
 }

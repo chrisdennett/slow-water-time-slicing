@@ -17,6 +17,7 @@ const maxHue = 257;
 let count = minHue;
 let inc = 0.5;
 
+// let videoDimensions = { width: 960, height: 420 };
 let videoDimensions = { width: 640, height: 360 };
 
 const offscreenCanvas = document.createElement("canvas");
@@ -29,7 +30,7 @@ const ctx = artCanvas.getContext("2d", { alpha: false });
 export function setup() {
   // hide controls by default and if app is right clicked
   appElement.addEventListener("contextmenu", onAppRightClick);
-  // controls.style.display = "none";
+  controls.style.display = "none";
 
   // keyboard controls
   // document.addEventListener("keydown", onKeyDown);
