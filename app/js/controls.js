@@ -1,25 +1,24 @@
 // global
 export const globalState = { soundStarted: false };
 
+const defaultTotalSlices = localStorage.getItem("totalSlices") || 185;
+const defaultAlpha = localStorage.getItem("alpha") || 0.18;
+
 const defaultParams = {
   totalSlices: {
     type: "slider",
     min: 2,
     max: 1000,
     step: 1,
-    value: 200,
+    value: defaultTotalSlices,
   },
   alpha: {
     type: "slider",
     min: 0,
     max: 1,
     step: 0.01,
-    value: 0.2,
+    value: defaultAlpha,
   },
-  // isReflected: {
-  //   type: "checkbox",
-  //   value: false,
-  // },
 };
 const params = JSON.parse(JSON.stringify(defaultParams));
 
@@ -60,6 +59,7 @@ export function initControls(controlsElement) {
       inputElement.addEventListener("input", (e) => {
         c.value = e.target.value;
         valueElement.innerHTML = c.value;
+        localStorage.setItem(key, c.value);
       });
       inputElements.push(inputElement);
       //
