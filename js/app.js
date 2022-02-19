@@ -17,8 +17,9 @@ const maxHue = 257;
 let count = minHue;
 let inc = 0.5;
 
-// let videoDimensions = { width: 960, height: 420 };
-let videoDimensions = { width: 640, height: 360 };
+// let videoDimensions = { width: 1280, height: 600 };
+let videoDimensions = { width: 640, height: 300 };
+// let videoDimensions = { width: 440, height: 200 };
 
 const offscreenCanvas = document.createElement("canvas");
 offscreenCanvas.width = videoDimensions.width;
@@ -76,17 +77,20 @@ export function draw() {
     sliceArray.pop();
   }
 
-  drawTimeSlicedCanvas(sliceArray, videoDimensions);
+  drawTimeSlicedCanvas(sliceArray, videoDimensions, params.alpha.value);
 
   window.requestAnimationFrame(draw);
 }
 
-function drawTimeSlicedCanvas(sliceArray, videoDimensions) {
+function drawTimeSlicedCanvas(sliceArray, videoDimensions, alpha) {
   const h = videoDimensions.height / sliceArray.length;
   const w = videoDimensions.width;
 
+  osCtx.globalAlpha = alpha;
+
   for (let i = 0; i < sliceArray.length; i++) {
     const y = i * h;
+    // osCtx.drawImage(sliceArray[i], 0, y);
     osCtx.drawImage(sliceArray[i], 0, y, w, h, 0, y, w, h);
   }
 

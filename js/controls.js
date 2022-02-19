@@ -7,12 +7,19 @@ const defaultParams = {
     min: 2,
     max: 1000,
     step: 1,
-    value: 255,
+    value: 200,
   },
-  isReflected: {
-    type: "checkbox",
-    value: false,
+  alpha: {
+    type: "slider",
+    min: 0,
+    max: 1,
+    step: 0.01,
+    value: 0.2,
   },
+  // isReflected: {
+  //   type: "checkbox",
+  //   value: false,
+  // },
 };
 const params = JSON.parse(JSON.stringify(defaultParams));
 
