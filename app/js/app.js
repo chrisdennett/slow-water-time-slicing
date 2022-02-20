@@ -17,8 +17,8 @@ const maxHue = 47; //257;
 let count = minHue;
 let inc = 0.1;
 
-// let videoDimensions = { width: 1280, height: 600 };
-let videoDimensions = { width: 640, height: 300 };
+let videoDimensions = { width: 1920, height: 1080 };
+// let videoDimensions = { width: 640, height: 300 };
 // let videoDimensions = { width: 440, height: 200 };
 
 const offscreenCanvas = document.createElement("canvas");
@@ -96,8 +96,6 @@ function drawTimeSlicedCanvas(
   const h = videoDimensions.height;
   const sliceH = h / sliceArray.length;
   const w = videoDimensions.width;
-
-  // osCtx.clearRect(0, 0, w, h);
 
   osCtx.globalAlpha = alpha;
 

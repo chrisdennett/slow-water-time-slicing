@@ -75,6 +75,7 @@ export function initControls(controlsElement) {
       inputElement.addEventListener("input", (e) => {
         c.value = e.target.checked;
         valueElement.innerHTML = c.value;
+        localStorage.setItem(key, c.value);
       });
       inputElements.push(inputElement);
       //
