@@ -3,7 +3,10 @@ export const globalState = { soundStarted: false };
 
 const defaultTotalSlices = localStorage.getItem("totalSlices") || 185;
 const defaultAlpha = localStorage.getItem("alpha") || 0.18;
-const defaultReflectSides = localStorage.getItem("reflectSides") || true;
+const defaultReflectSides =
+  typeof localStorage.getItem("reflectSides") !== "undefined"
+    ? localStorage.getItem("reflectSides")
+    : false;
 
 const defaultParams = {
   totalSlices: {

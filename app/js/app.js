@@ -18,8 +18,8 @@ let count = minHue;
 let inc = 0.1;
 
 // let videoDimensions = { width: 1920, height: 1080 };
-let videoDimensions = { width: 640, height: 360 };
-// let videoDimensions = { width: 440, height: 200 };
+// let videoDimensions = { width: 640, height: 360 };
+let videoDimensions = { width: 480, height: 270 };
 
 // 1.78
 // 0.56
