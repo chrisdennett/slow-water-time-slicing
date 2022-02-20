@@ -3,6 +3,7 @@ export const globalState = { soundStarted: false };
 
 const defaultTotalSlices = localStorage.getItem("totalSlices") || 185;
 const defaultAlpha = localStorage.getItem("alpha") || 0.18;
+const defaultReflectSides = localStorage.getItem("reflectSides") || true;
 
 const defaultParams = {
   totalSlices: {
@@ -18,6 +19,10 @@ const defaultParams = {
     max: 1,
     step: 0.01,
     value: defaultAlpha,
+  },
+  reflectSides: {
+    type: "checkbox",
+    value: defaultReflectSides,
   },
 };
 const params = JSON.parse(JSON.stringify(defaultParams));

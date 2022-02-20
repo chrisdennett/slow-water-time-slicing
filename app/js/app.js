@@ -12,10 +12,10 @@ const params = initControls(controls);
 
 // global defaults
 const sliceArray = [];
-const minHue = 176;
-const maxHue = 257;
+const minHue = 25; //176;
+const maxHue = 47; //257;
 let count = minHue;
-let inc = 0.5;
+let inc = 0.1;
 
 // let videoDimensions = { width: 1280, height: 600 };
 let videoDimensions = { width: 640, height: 300 };
@@ -77,22 +77,47 @@ export function draw() {
     sliceArray.pop();
   }
 
-  drawTimeSlicedCanvas(sliceArray, videoDimensions, params.alpha.value);
+  drawTimeSlicedCanvas(
+    sliceArray,
+    videoDimensions,
+    params.alpha.value,
+    params.reflectSides.value
+  );
 
   window.requestAnimationFrame(draw);
 }
 
-function drawTimeSlicedCanvas(sliceArray, videoDimensions, alpha) {
-  const h = videoDimensions.height / sliceArray.length;
+function drawTimeSlicedCanvas(
+  sliceArray,
+  videoDimensions,
+  alpha,
+  reflectSides
+) {
+  const h = videoDimensions.height;
+  const sliceH = h / sliceArray.length;
   const w = videoDimensions.width;
+
+  // osCtx.clearRect(0, 0, w, h);
 
   osCtx.globalAlpha = alpha;
 
+  const halfW = w / 2;
+
   for (let i = 0; i < sliceArray.length; i++) {
-    const y = i * h;
-    // osCtx.drawImage(sliceArray[i], 0, y);
-    osCtx.drawImage(sliceArray[i], 0, y, w, h, 0, y, w, h);
+    const y = i * sliceH;
+
+    if (reflectSides) {
+      osCtx.drawImage(sliceArray[i], 0, y, halfW, sliceH, 0, y, halfW, sliceH);
+    } else {
+      osCtx.drawImage(sliceArray[i], 0, y, w, h, 0, y, w, h);
+    }
   }
 
   ctx.drawImage(offscreenCanvas, 0, 0);
+
+  if (reflectSides) {
+    ctx.translate(w, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(offscreenCanvas, 0, 0, halfW, h, 0, 0, halfW, h);
+  }
 }

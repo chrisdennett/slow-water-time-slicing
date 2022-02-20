@@ -7,7 +7,7 @@ export function getFlippedVideoCanvas(video, videoDimensions, count) {
   frameCtx.translate(frameCanvas.width, 0);
   frameCtx.scale(-1, 1);
 
-  frameCtx.fillStyle = `hsla(${count}, 64%, 45%, 0.95)`;
+  frameCtx.fillStyle = `hsla(${count}, 64%, 40%, 0.95)`;
   frameCtx.drawImage(video, 0, 0);
   frameCtx.globalCompositeOperation = "color";
   frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
