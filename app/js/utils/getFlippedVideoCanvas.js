@@ -1,8 +1,10 @@
 export function getFlippedVideoCanvas(video, videoDimensions, count) {
   const frameCanvas = document.createElement("canvas");
 
-  frameCanvas.width = videoDimensions.width;
-  frameCanvas.height = videoDimensions.height;
+  if (frameCanvas.width !== videoDimensions.width) {
+    frameCanvas.width = videoDimensions.width;
+    frameCanvas.height = videoDimensions.height;
+  }
   const frameCtx = frameCanvas.getContext("2d", { alpha: false });
   frameCtx.translate(frameCanvas.width, 0);
   frameCtx.scale(-1, 1);
@@ -13,8 +15,11 @@ export function getFlippedVideoCanvas(video, videoDimensions, count) {
   frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
 
   const tallCanvas = document.createElement("canvas");
-  tallCanvas.width = frameCanvas.height;
-  tallCanvas.height = frameCanvas.width;
+
+  if (tallCanvas.width !== frameCanvas.height) {
+    tallCanvas.width = frameCanvas.height;
+    tallCanvas.height = frameCanvas.width;
+  }
 
   const tallCtx = tallCanvas.getContext("2d");
   tallCtx.fillStyle = "yellow";
