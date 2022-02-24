@@ -23,7 +23,6 @@ let videoDimensions = { width: 480, height: 270 };
 
 // 1.78
 // 0.56
-
 const offscreenCanvas = document.createElement("canvas");
 const osCtx = offscreenCanvas.getContext("2d", { alpha: false });
 const ctx = artCanvas.getContext("2d", { alpha: false });

@@ -1,10 +1,9 @@
 export function getFlippedVideoCanvas(video, videoDimensions, count) {
   const frameCanvas = document.createElement("canvas");
 
-  // if (frameCanvas.width !== videoDimensions.width) {
   frameCanvas.width = videoDimensions.width;
   frameCanvas.height = videoDimensions.height;
-  // }
+
   const frameCtx = frameCanvas.getContext("2d", { alpha: false });
   frameCtx.translate(frameCanvas.width, 0);
   frameCtx.scale(-1, 1);
@@ -14,20 +13,18 @@ export function getFlippedVideoCanvas(video, videoDimensions, count) {
   frameCtx.globalCompositeOperation = "color";
   frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
 
-  const tallCanvas = document.createElement("canvas");
+  // const tallCanvas = document.createElement("canvas");
 
-  // if (tallCanvas.width !== frameCanvas.height) {
-  tallCanvas.width = frameCanvas.height;
-  tallCanvas.height = frameCanvas.width;
-  // }
+  // tallCanvas.width = frameCanvas.height;
+  // tallCanvas.height = frameCanvas.width;
 
-  const tallCtx = tallCanvas.getContext("2d");
-  tallCtx.fillStyle = "yellow";
-  tallCtx.fillRect(10, 10, tallCanvas.width - 20, tallCanvas.height - 20);
+  // const tallCtx = tallCanvas.getContext("2d");
+  // tallCtx.fillStyle = "yellow";
+  // tallCtx.fillRect(10, 10, tallCanvas.width - 20, tallCanvas.height - 20);
 
-  tallCtx.translate(tallCanvas.width, 0);
-  tallCtx.rotate((90 * Math.PI) / 180);
-  tallCtx.drawImage(frameCanvas, 0, 0);
+  // tallCtx.translate(tallCanvas.width, 0);
+  // tallCtx.rotate((90 * Math.PI) / 180);
+  // tallCtx.drawImage(frameCanvas, 0, 0);
 
-  return tallCanvas;
+  return frameCanvas;
 }
