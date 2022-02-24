@@ -20,7 +20,7 @@ let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
 const sliceArray = [];
 const minHue = 25; //176;
 const maxHue = 47; //257;
-const artCanvasHeight = Math.round(videoDimensions.height * 3.1);
+const artCanvasHeight = Math.round(videoDimensions.height * 2);
 const gapAfterReflectingCanvas =
   (artCanvasHeight - videoDimensions.height * 2) / 2;
 let count = minHue;
