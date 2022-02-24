@@ -12,5 +12,17 @@ export function getFlippedVideoCanvas(video, videoDimensions, count) {
   frameCtx.globalCompositeOperation = "color";
   frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
 
-  return frameCanvas;
+  const tallCanvas = document.createElement("canvas");
+  tallCanvas.width = frameCanvas.height;
+  tallCanvas.height = frameCanvas.width;
+
+  const tallCtx = tallCanvas.getContext("2d");
+  tallCtx.fillStyle = "yellow";
+  tallCtx.fillRect(10, 10, tallCanvas.width - 20, tallCanvas.height - 20);
+
+  tallCtx.translate(tallCanvas.width, 0);
+  tallCtx.rotate((90 * Math.PI) / 180);
+  tallCtx.drawImage(frameCanvas, 0, 0);
+
+  return tallCanvas;
 }

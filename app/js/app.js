@@ -25,8 +25,6 @@ let videoDimensions = { width: 480, height: 270 };
 // 0.56
 
 const offscreenCanvas = document.createElement("canvas");
-offscreenCanvas.width = videoDimensions.width;
-offscreenCanvas.height = videoDimensions.height;
 const osCtx = offscreenCanvas.getContext("2d", { alpha: false });
 const ctx = artCanvas.getContext("2d", { alpha: false });
 
@@ -82,7 +80,7 @@ export function draw() {
 
   drawTimeSlicedCanvas(
     sliceArray,
-    videoDimensions,
+    { w: artCanvas.width, h: artCanvas.height },
     params.alpha.value,
     params.reflectSides.value
   );
@@ -92,13 +90,17 @@ export function draw() {
 
 function drawTimeSlicedCanvas(
   sliceArray,
-  videoDimensions,
+  canvasDimensions,
   alpha,
   reflectSides
 ) {
-  const h = videoDimensions.height;
+  const { w, h } = canvasDimensions;
   const sliceH = h / sliceArray.length;
-  const w = videoDimensions.width;
+
+  if (offscreenCanvas.width !== w || offscreenCanvas.height !== h) {
+    offscreenCanvas.width = w;
+    offscreenCanvas.height = h;
+  }
 
   osCtx.globalAlpha = alpha;
 
