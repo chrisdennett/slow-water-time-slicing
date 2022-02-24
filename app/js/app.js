@@ -20,9 +20,8 @@ let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
 const sliceArray = [];
 const minHue = 25; //176;
 const maxHue = 47; //257;
-const artCanvasHeight = Math.round(videoDimensions.height * 2);
-const gapAfterReflectingCanvas =
-  (artCanvasHeight - videoDimensions.height * 2) / 2;
+const artCanvasHeight = Math.round(videoDimensions.height * 2.5);
+const gapAfterReflectingCanvas = artCanvasHeight - videoDimensions.height * 2;
 let count = minHue;
 let inc = 0.1;
 
@@ -144,6 +143,4 @@ function drawTimeSlicedCanvas(
   // half the space remaining in art canvas
   ctx.drawImage(offscreenCanvas, 0, 0, w, 1, 0, 0, w, artCanvasHeight);
   ctx.drawImage(offscreenCanvas, 0, gapAfterReflectingCanvas);
-
-  console.log("offscreenCanvas.height: ", offscreenCanvas.height);
 }
