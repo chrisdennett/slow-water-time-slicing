@@ -1,6 +1,8 @@
 import { getFlippedVideoCanvas } from "./utils/getFlippedVideoCanvas.js";
 import { initControls } from "./controls.js";
 
+// TV is 1920x1080
+
 // app elements
 const appElement = document.querySelector("#app");
 const controls = document.querySelector("#controls");
@@ -10,16 +12,19 @@ const video = document.querySelector("#videoElement");
 // set up controls
 const params = initControls(controls);
 
+// let videoDimensions = { width: 1920, height: 1080 };
+// let videoDimensions = { width: 640, height: 360 };
+let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
+
 // global defaults
 const sliceArray = [];
 const minHue = 25; //176;
 const maxHue = 47; //257;
+const artCanvasHeight = Math.round(videoDimensions.height * 3.1);
+const gapAfterReflectingCanvas =
+  (artCanvasHeight - videoDimensions.height * 2) / 2;
 let count = minHue;
 let inc = 0.1;
-
-// let videoDimensions = { width: 1920, height: 1080 };
-// let videoDimensions = { width: 640, height: 360 };
-let videoDimensions = { width: 480, height: 270 };
 
 // 1.78
 // 0.56
@@ -68,7 +73,7 @@ export function draw() {
 
   if (artCanvas.width !== frameCanvas.width) {
     artCanvas.width = frameCanvas.width;
-    artCanvas.height = frameCanvas.height;
+    artCanvas.height = artCanvasHeight;
   }
 
   sliceArray.unshift(frameCanvas);
@@ -79,7 +84,7 @@ export function draw() {
 
   drawTimeSlicedCanvas(
     sliceArray,
-    { w: artCanvas.width, h: artCanvas.height },
+    { w: frameCanvas.width, h: frameCanvas.height },
     params.alpha.value,
     params.reflectSides.value
   );
@@ -91,14 +96,15 @@ function drawTimeSlicedCanvas(
   sliceArray,
   canvasDimensions,
   alpha,
-  reflectSides
+  reflectSides,
+  reflectDown = true
 ) {
   const { w, h } = canvasDimensions;
   const sliceH = h / sliceArray.length;
 
-  if (offscreenCanvas.width !== w || offscreenCanvas.height !== h) {
+  if (offscreenCanvas.width !== w || offscreenCanvas.height !== h * 2) {
     offscreenCanvas.width = w;
-    offscreenCanvas.height = h;
+    offscreenCanvas.height = h * 2;
   }
 
   osCtx.globalAlpha = alpha;
@@ -106,6 +112,7 @@ function drawTimeSlicedCanvas(
   const halfW = w / 2;
 
   for (let i = 0; i < sliceArray.length; i++) {
+    // const y = i * sliceH;
     const y = i * sliceH;
 
     if (reflectSides) {
@@ -115,11 +122,28 @@ function drawTimeSlicedCanvas(
     }
   }
 
-  ctx.drawImage(offscreenCanvas, 0, 0);
+  // ctx.fillStyle = "yellow";
+  // ctx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
 
   if (reflectSides) {
-    ctx.translate(w, 0);
-    ctx.scale(-1, 1);
-    ctx.drawImage(offscreenCanvas, 0, 0, halfW, h, 0, 0, halfW, h);
+    osCtx.save();
+    osCtx.translate(w, 0);
+    osCtx.scale(-1, 1);
+    osCtx.drawImage(offscreenCanvas, 0, 0, halfW, h, 0, 0, halfW, h);
+    osCtx.restore();
   }
+
+  if (reflectDown) {
+    osCtx.save();
+    osCtx.translate(0, h);
+    osCtx.scale(1, -1);
+    osCtx.drawImage(offscreenCanvas, 0, 0, w, h, 0, -h, w, h);
+    osCtx.restore();
+  }
+
+  // half the space remaining in art canvas
+  ctx.drawImage(offscreenCanvas, 0, 0, w, 1, 0, 0, w, artCanvasHeight);
+  ctx.drawImage(offscreenCanvas, 0, gapAfterReflectingCanvas);
+
+  console.log("offscreenCanvas.height: ", offscreenCanvas.height);
 }

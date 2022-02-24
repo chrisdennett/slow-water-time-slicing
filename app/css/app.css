@@ -9,6 +9,7 @@ body {
 
 canvas {
   height: 100vh;
+  /* width: 100vw; */
   object-fit: cover;
   margin: auto;
 }
