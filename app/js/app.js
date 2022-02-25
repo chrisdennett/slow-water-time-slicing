@@ -19,8 +19,8 @@ let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.7
 
 // global defaults
 const sliceArray = [];
-const minHue = 25; //176;
-const maxHue = 47; //257;
+let currMinHue = params.minHue.value; //176;
+let currMaxHue = params.maxHue.value; //257;
 const reflectDown = false;
 const artCanvasHeight = reflectDown
   ? Math.round(videoDimensions.height * 2.1)
@@ -34,7 +34,7 @@ let gapAfterReflectingCanvas =
   (artCanvasHeight - videoDimensions.height * 2) / 2;
 // offset from the top
 
-let count = minHue;
+let count = parseInt(params.minHue.value);
 let inc = 0.1;
 
 // 1.78
@@ -77,10 +77,27 @@ export function setup() {
 
 // draw loop
 export function draw() {
-  const frameCanvas = getFlippedVideoCanvas(video, videoDimensions, count);
-  count += inc;
+  const frameCanvas = getFlippedVideoCanvas(
+    video,
+    videoDimensions,
+    count,
+    params.useTint.value
+  );
 
-  if (count > maxHue || count < minHue) inc = -inc;
+  if (params.useTint.value) {
+    count += inc;
+    if (currMinHue !== parseInt(params.minHue.value)) {
+      currMinHue = parseInt(params.minHue.value);
+      count = currMinHue;
+    }
+
+    if (currMaxHue !== parseInt(params.maxHue.value)) {
+      currMaxHue = parseInt(params.maxHue.value);
+      count = currMinHue;
+    }
+
+    if (count > params.maxHue.value || count < params.minHue.value) inc = -inc;
+  }
 
   if (artCanvas.width !== frameCanvas.width) {
     artCanvas.width = artCanvasWidth;

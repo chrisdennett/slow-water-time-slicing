@@ -3,6 +3,11 @@ export const globalState = { soundStarted: false };
 
 const defaultTotalSlices = localStorage.getItem("totalSlices") || 185;
 const defaultAlpha = localStorage.getItem("alpha") || 0.18;
+const defaultMinHue = localStorage.getItem("minHue") || 25;
+const defaultMaxHue = localStorage.getItem("maxHue") || 47;
+
+const storedUseTint = localStorage.getItem("useTint");
+const defaultUseTint = storedUseTint === "true" ? true : false;
 
 const storedReflectSides = localStorage.getItem("reflectSides");
 const defaultReflectSides = storedReflectSides === "true" ? true : false;
@@ -21,6 +26,24 @@ const defaultParams = {
     max: 1,
     step: 0.01,
     value: defaultAlpha,
+  },
+  minHue: {
+    type: "slider",
+    min: 0,
+    max: 360,
+    step: 1,
+    value: defaultMinHue,
+  },
+  maxHue: {
+    type: "slider",
+    min: 0,
+    max: 360,
+    step: 1,
+    value: defaultMaxHue,
+  },
+  useTint: {
+    type: "checkbox",
+    value: defaultUseTint,
   },
   reflectSides: {
     type: "checkbox",

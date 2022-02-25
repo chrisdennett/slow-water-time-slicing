@@ -1,4 +1,4 @@
-export function getFlippedVideoCanvas(video, videoDimensions, count) {
+export function getFlippedVideoCanvas(video, videoDimensions, count, useTint) {
   const frameCanvas = document.createElement("canvas");
 
   const { width: w, height: h } = videoDimensions;
@@ -10,11 +10,14 @@ export function getFlippedVideoCanvas(video, videoDimensions, count) {
   frameCtx.translate(frameCanvas.width, 0);
   frameCtx.scale(-1, 1);
 
-  frameCtx.fillStyle = `hsla(${count}, 64%, 40%, 0.95)`;
+  if (useTint) {
+    frameCtx.fillStyle = `hsla(${count}, 64%, 40%, 0.95)`;
+  }
   frameCtx.drawImage(video, 0, 10, w - 25, h - 14, 0, 0, w, h);
-  frameCtx.globalCompositeOperation = "color";
-  frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
-
+  if (useTint) {
+    frameCtx.globalCompositeOperation = "color";
+    frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
+  }
   // const tallCanvas = document.createElement("canvas");
 
   // tallCanvas.width = frameCanvas.height;
