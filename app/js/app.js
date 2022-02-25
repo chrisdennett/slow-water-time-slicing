@@ -20,7 +20,11 @@ let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
 const sliceArray = [];
 const minHue = 25; //176;
 const maxHue = 47; //257;
-const artCanvasHeight = Math.round(videoDimensions.height * 2.1);
+const reflectDown = false;
+const artCanvasHeight = reflectDown
+  ? Math.round(videoDimensions.height * 2.1)
+  : videoDimensions.height;
+
 let gapAfterReflectingCanvas =
   (artCanvasHeight - videoDimensions.height * 2) / 2;
 // offset from the top
@@ -88,7 +92,8 @@ export function draw() {
     sliceArray,
     { w: frameCanvas.width, h: frameCanvas.height },
     params.alpha.value,
-    params.reflectSides.value
+    params.reflectSides.value,
+    reflectDown
   );
 
   window.requestAnimationFrame(draw);
@@ -99,14 +104,16 @@ function drawTimeSlicedCanvas(
   canvasDimensions,
   alpha,
   reflectSides,
-  reflectDown = true
+  reflectDown = false
 ) {
   const { w, h } = canvasDimensions;
   const sliceH = h / sliceArray.length;
 
-  if (offscreenCanvas.width !== w || offscreenCanvas.height !== h * 2) {
+  const offCanvasH = reflectDown ? h * 2 : h;
+
+  if (offscreenCanvas.width !== w || offscreenCanvas.height !== offCanvasH) {
     offscreenCanvas.width = w;
-    offscreenCanvas.height = h * 2;
+    offscreenCanvas.height = offCanvasH;
   }
 
   osCtx.globalAlpha = alpha;
@@ -141,11 +148,10 @@ function drawTimeSlicedCanvas(
     osCtx.scale(1, -1);
     osCtx.drawImage(offscreenCanvas, 0, 0, w, h, 0, -h, w, h);
     osCtx.restore();
+    // half the space remaining in art canvas
+    ctx.drawImage(offscreenCanvas, 0, 0, w, 1, 0, 0, w, artCanvasHeight);
+    ctx.drawImage(offscreenCanvas, 0, gapAfterReflectingCanvas);
+  } else {
+    ctx.drawImage(offscreenCanvas, 0, 0);
   }
-
-  // half the space remaining in art canvas
-  ctx.drawImage(offscreenCanvas, 0, 0, w, 1, 0, 0, w, artCanvasHeight);
-  ctx.drawImage(offscreenCanvas, 0, gapAfterReflectingCanvas);
-
-  console.log("offscreenCanvas.height: ", offscreenCanvas.height);
 }
