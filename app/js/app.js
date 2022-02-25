@@ -14,8 +14,8 @@ const params = initControls(controls);
 
 // let videoDimensions = { width: 1920, height: 1080 };
 // let videoDimensions = { width: 640, height: 360 };
-// let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
-let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
+let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
+// let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // global defaults
 const sliceArray = [];
@@ -25,6 +25,10 @@ const reflectDown = false;
 const artCanvasHeight = reflectDown
   ? Math.round(videoDimensions.height * 2.1)
   : videoDimensions.height;
+
+const artCanvasWidth = reflectDown
+  ? videoDimensions.width
+  : videoDimensions.width;
 
 let gapAfterReflectingCanvas =
   (artCanvasHeight - videoDimensions.height * 2) / 2;
@@ -79,7 +83,7 @@ export function draw() {
   if (count > maxHue || count < minHue) inc = -inc;
 
   if (artCanvas.width !== frameCanvas.width) {
-    artCanvas.width = frameCanvas.width;
+    artCanvas.width = artCanvasWidth;
     artCanvas.height = artCanvasHeight;
   }
 
