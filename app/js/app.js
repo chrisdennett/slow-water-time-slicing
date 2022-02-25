@@ -14,7 +14,8 @@ const params = initControls(controls);
 
 // let videoDimensions = { width: 1920, height: 1080 };
 // let videoDimensions = { width: 640, height: 360 };
-let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
+// let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4
+let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // global defaults
 const sliceArray = [];
