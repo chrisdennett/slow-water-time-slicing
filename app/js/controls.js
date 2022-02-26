@@ -27,6 +27,14 @@ const defaultParams = {
     step: 0.01,
     value: defaultAlpha,
   },
+  useSideSlice: {
+    type: "checkbox",
+    value: false,
+  },
+  useTint: {
+    type: "checkbox",
+    value: defaultUseTint,
+  },
   minHue: {
     type: "slider",
     min: 0,
@@ -40,10 +48,6 @@ const defaultParams = {
     max: 360,
     step: 1,
     value: defaultMaxHue,
-  },
-  useTint: {
-    type: "checkbox",
-    value: defaultUseTint,
   },
   reflectSides: {
     type: "checkbox",

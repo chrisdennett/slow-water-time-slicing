@@ -115,7 +115,8 @@ export function draw() {
     { w: frameCanvas.width, h: frameCanvas.height },
     params.alpha.value,
     params.reflectSides.value,
-    reflectDown
+    reflectDown,
+    params.useSideSlice.value
   );
 
   window.requestAnimationFrame(draw);
@@ -126,10 +127,12 @@ function drawTimeSlicedCanvas(
   canvasDimensions,
   alpha,
   reflectSides,
-  reflectDown = false
+  reflectDown = false,
+  useSideSlice
 ) {
   const { w, h } = canvasDimensions;
   const sliceH = h / sliceArray.length;
+  const sliceW = w / sliceArray.length;
 
   const offCanvasH = reflectDown ? h * 2 : h;
 
@@ -143,19 +146,16 @@ function drawTimeSlicedCanvas(
   const halfW = w / 2;
 
   for (let i = 0; i < sliceArray.length; i++) {
-    // const y = i * sliceH;
-    const y = i * sliceH;
-
-    if (reflectSides) {
-      osCtx.drawImage(sliceArray[i], 0, y, halfW, sliceH, 0, y, halfW, sliceH);
+    if (useSideSlice) {
+      const xPos = i * sliceW;
+      osCtx.drawImage(sliceArray[i], xPos, 0, sliceW, h, xPos, 0, sliceW, h);
     } else {
-      osCtx.drawImage(sliceArray[i], 0, y, w, h, 0, y, w, h);
+      const yPos = i * sliceH;
+      osCtx.drawImage(sliceArray[i], 0, yPos, w, sliceH, 0, yPos, w, sliceH);
     }
   }
 
-  // ctx.fillStyle = "yellow";
-  // ctx.fillRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
-
+  // REFLECT LEFT Half of canvas to RIGHT
   if (reflectSides) {
     osCtx.save();
     osCtx.translate(w, 0);
@@ -164,6 +164,7 @@ function drawTimeSlicedCanvas(
     osCtx.restore();
   }
 
+  // REFLECT entire canvas below
   if (reflectDown) {
     osCtx.save();
     osCtx.translate(0, h);
