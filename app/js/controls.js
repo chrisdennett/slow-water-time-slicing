@@ -3,11 +3,11 @@ export const globalState = { soundStarted: false };
 
 const defaultTotalSlices = localStorage.getItem("totalSlices") || 185;
 const defaultAlpha = localStorage.getItem("alpha") || 0.18;
-const defaultMinHue = localStorage.getItem("minHue") || 25;
-const defaultMaxHue = localStorage.getItem("maxHue") || 47;
+const defaultMinHue = localStorage.getItem("minHue") || 162;
+const defaultMaxHue = localStorage.getItem("maxHue") || 193;
 
 const storedUseTint = localStorage.getItem("useTint");
-const defaultUseTint = storedUseTint === "true" ? true : false;
+const defaultUseTint = storedUseTint === "false" ? false : true;
 
 const storedReflectSides = localStorage.getItem("reflectSides");
 const defaultReflectSides = storedReflectSides === "true" ? true : false;

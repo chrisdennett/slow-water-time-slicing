@@ -7,8 +7,8 @@ export function getFlippedVideoCanvas(video, videoDimensions, count, useTint) {
   frameCanvas.height = videoDimensions.height;
 
   const frameCtx = frameCanvas.getContext("2d", { alpha: false });
-  frameCtx.translate(frameCanvas.width, 0);
-  frameCtx.scale(-1, 1);
+  frameCtx.translate(0, frameCanvas.height);
+  frameCtx.scale(1, -1);
 
   if (useTint) {
     frameCtx.fillStyle = `hsla(${count}, 64%, 40%, 0.95)`;
