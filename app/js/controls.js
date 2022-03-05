@@ -1,31 +1,20 @@
 // global
 export const globalState = { soundStarted: false };
 
-const defaultTotalSlices = localStorage.getItem("totalSlices") || 185;
-const defaultAlpha = localStorage.getItem("alpha") || 0.18;
-const defaultMinHue = localStorage.getItem("minHue") || 162;
-const defaultMaxHue = localStorage.getItem("maxHue") || 193;
-
-const storedUseTint = localStorage.getItem("useTint");
-const defaultUseTint = storedUseTint === "false" ? false : true;
-
-const storedReflectSides = localStorage.getItem("reflectSides");
-const defaultReflectSides = storedReflectSides === "true" ? true : false;
-
 const defaultParams = {
   totalSlices: {
     type: "slider",
     min: 2,
     max: 1000,
     step: 1,
-    value: defaultTotalSlices,
+    value: localStorage.getItem("totalSlices") || 185,
   },
   alpha: {
     type: "slider",
     min: 0,
     max: 1,
     step: 0.01,
-    value: defaultAlpha,
+    value: localStorage.getItem("alpha") || 0.3,
   },
   useSideSlice: {
     type: "checkbox",
@@ -33,25 +22,34 @@ const defaultParams = {
   },
   useTint: {
     type: "checkbox",
-    value: defaultUseTint,
+    value: localStorage.getItem("useTint") === "false" ? false : true,
   },
   minHue: {
     type: "slider",
     min: 0,
     max: 360,
     step: 1,
-    value: defaultMinHue,
+    value: localStorage.getItem("minHue") || 162,
   },
   maxHue: {
     type: "slider",
     min: 0,
     max: 360,
     step: 1,
-    value: defaultMaxHue,
+    value: localStorage.getItem("maxHue") || 193,
+  },
+  effectType: {
+    type: "radio",
+    options: ["flow", "disjointed", "jitter"],
+    value: localStorage.getItem("effectType") || "flow",
+  },
+  flipUpsideDown: {
+    type: "checkbox",
+    value: localStorage.getItem("flipUpsideDown") === "false" ? false : true,
   },
   reflectSides: {
     type: "checkbox",
-    value: defaultReflectSides,
+    value: localStorage.getItem("reflectSides") === "true" ? true : false,
   },
 };
 const params = JSON.parse(JSON.stringify(defaultParams));

@@ -1,4 +1,10 @@
-export function getFlippedVideoCanvas(video, videoDimensions, count, useTint) {
+export function getFlippedVideoCanvas({
+  video,
+  videoDimensions,
+  count,
+  useTint,
+  flipUpsideDown,
+}) {
   const frameCanvas = document.createElement("canvas");
 
   const { width: w, height: h } = videoDimensions;
@@ -7,8 +13,14 @@ export function getFlippedVideoCanvas(video, videoDimensions, count, useTint) {
   frameCanvas.height = videoDimensions.height;
 
   const frameCtx = frameCanvas.getContext("2d", { alpha: false });
-  frameCtx.translate(0, frameCanvas.height);
-  frameCtx.scale(1, -1);
+
+  if (flipUpsideDown) {
+    frameCtx.translate(0, frameCanvas.height);
+    frameCtx.scale(1, -1);
+  } else {
+    frameCtx.translate(frameCanvas.width, 0);
+    frameCtx.scale(-1, 1);
+  }
 
   if (useTint) {
     frameCtx.fillStyle = `hsla(${count}, 64%, 40%, 0.95)`;

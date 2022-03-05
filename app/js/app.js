@@ -1,5 +1,6 @@
 import { getFlippedVideoCanvas } from "./utils/getFlippedVideoCanvas.js";
 import { initControls } from "./controls.js";
+import { drawTimeSlicedCanvas } from "./utils/drawTimeSlicedCanvas.js";
 
 // TV is 1920x1080
 
@@ -17,28 +18,13 @@ const params = initControls(controls);
 let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
 // let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
-// global defaults
+// global variables
 const sliceArray = [];
 let currMinHue = params.minHue.value; //176;
 let currMaxHue = params.maxHue.value; //257;
-const reflectDown = false;
-const artCanvasHeight = reflectDown
-  ? Math.round(videoDimensions.height * 2.1)
-  : videoDimensions.height;
-
-const artCanvasWidth = reflectDown
-  ? videoDimensions.width
-  : videoDimensions.width;
-
-let gapAfterReflectingCanvas =
-  (artCanvasHeight - videoDimensions.height * 2) / 2;
-// offset from the top
-
 let count = parseInt(params.minHue.value);
 let inc = 0.1;
-
-// 1.78
-// 0.56
+let disjointedOrder = null;
 const offscreenCanvas = document.createElement("canvas");
 const osCtx = offscreenCanvas.getContext("2d", { alpha: false });
 const ctx = artCanvas.getContext("2d", { alpha: false });
@@ -77,12 +63,13 @@ export function setup() {
 
 // draw loop
 export function draw() {
-  const frameCanvas = getFlippedVideoCanvas(
+  const frameCanvas = getFlippedVideoCanvas({
     video,
     videoDimensions,
     count,
-    params.useTint.value
-  );
+    useTint: params.useTint.value,
+    flipUpsideDown: params.flipUpsideDown.value,
+  });
 
   if (params.useTint.value) {
     count += inc;
@@ -100,8 +87,8 @@ export function draw() {
   }
 
   if (artCanvas.width !== frameCanvas.width) {
-    artCanvas.width = artCanvasWidth;
-    artCanvas.height = artCanvasHeight;
+    artCanvas.width = videoDimensions.width;
+    artCanvas.height = videoDimensions.height;
   }
 
   sliceArray.unshift(frameCanvas);
@@ -110,71 +97,27 @@ export function draw() {
     sliceArray.pop();
   }
 
-  drawTimeSlicedCanvas(
+  if (
+    !disjointedOrder ||
+    sliceArray.length !== parseInt(params.totalSlices.value) ||
+    disjointedOrder.length !== sliceArray.length
+  ) {
+    disjointedOrder = [...sliceArray.keys()];
+    disjointedOrder.sort(() => Math.random() - 0.5);
+  }
+
+  drawTimeSlicedCanvas({
+    offscreenCanvas,
+    osCtx,
+    ctx,
     sliceArray,
-    { w: frameCanvas.width, h: frameCanvas.height },
-    params.alpha.value,
-    params.reflectSides.value,
-    reflectDown,
-    params.useSideSlice.value
-  );
+    canvasDimensions: { w: frameCanvas.width, h: frameCanvas.height },
+    alpha: params.alpha.value,
+    reflectSides: params.reflectSides.value,
+    useSideSlice: params.useSideSlice.value,
+    effectType: params.effectType.value,
+    disjointedOrder,
+  });
 
   window.requestAnimationFrame(draw);
-}
-
-function drawTimeSlicedCanvas(
-  sliceArray,
-  canvasDimensions,
-  alpha,
-  reflectSides,
-  reflectDown = false,
-  useSideSlice
-) {
-  const { w, h } = canvasDimensions;
-  const sliceH = h / sliceArray.length;
-  const sliceW = w / sliceArray.length;
-
-  const offCanvasH = reflectDown ? h * 2 : h;
-
-  if (offscreenCanvas.width !== w || offscreenCanvas.height !== offCanvasH) {
-    offscreenCanvas.width = w;
-    offscreenCanvas.height = offCanvasH;
-  }
-
-  osCtx.globalAlpha = alpha;
-
-  const halfW = w / 2;
-
-  for (let i = 0; i < sliceArray.length; i++) {
-    if (useSideSlice) {
-      const xPos = i * sliceW;
-      osCtx.drawImage(sliceArray[i], xPos, 0, sliceW, h, xPos, 0, sliceW, h);
-    } else {
-      const yPos = i * sliceH;
-      osCtx.drawImage(sliceArray[i], 0, yPos, w, sliceH, 0, yPos, w, sliceH);
-    }
-  }
-
-  // REFLECT LEFT Half of canvas to RIGHT
-  if (reflectSides) {
-    osCtx.save();
-    osCtx.translate(w, 0);
-    osCtx.scale(-1, 1);
-    osCtx.drawImage(offscreenCanvas, 0, 0, halfW, h, 0, 0, halfW, h);
-    osCtx.restore();
-  }
-
-  // REFLECT entire canvas below
-  if (reflectDown) {
-    osCtx.save();
-    osCtx.translate(0, h);
-    osCtx.scale(1, -1);
-    osCtx.drawImage(offscreenCanvas, 0, 0, w, h, 0, -h, w, h);
-    osCtx.restore();
-    // half the space remaining in art canvas
-    ctx.drawImage(offscreenCanvas, 0, 0, w, 1, 0, 0, w, artCanvasHeight);
-    ctx.drawImage(offscreenCanvas, 0, gapAfterReflectingCanvas);
-  } else {
-    ctx.drawImage(offscreenCanvas, 0, 0);
-  }
 }
