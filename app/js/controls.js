@@ -7,14 +7,14 @@ const defaultParams = {
     min: 2,
     max: 1000,
     step: 1,
-    value: localStorage.getItem("totalSlices") || 185,
+    value: window.localStorage.getItem("totalSlices") || 185,
   },
   alpha: {
     type: "slider",
     min: 0,
     max: 1,
     step: 0.01,
-    value: localStorage.getItem("alpha") || 0.3,
+    value: window.localStorage.getItem("alpha") || 0.3,
   },
   useSideSlice: {
     type: "checkbox",
@@ -22,34 +22,36 @@ const defaultParams = {
   },
   useTint: {
     type: "checkbox",
-    value: localStorage.getItem("useTint") === "false" ? false : true,
+    value: window.localStorage.getItem("useTint") === "false" ? false : true,
   },
   minHue: {
     type: "slider",
     min: 0,
     max: 360,
     step: 1,
-    value: localStorage.getItem("minHue") || 162,
+    value: window.localStorage.getItem("minHue") || 162,
   },
   maxHue: {
     type: "slider",
     min: 0,
     max: 360,
     step: 1,
-    value: localStorage.getItem("maxHue") || 193,
+    value: window.localStorage.getItem("maxHue") || 193,
   },
   effectType: {
     type: "radio",
     options: ["flow", "disjointed", "jitter"],
-    value: localStorage.getItem("effectType") || "flow",
+    value: window.localStorage.getItem("effectType") || "flow",
   },
   flipUpsideDown: {
     type: "checkbox",
-    value: localStorage.getItem("flipUpsideDown") === "false" ? false : true,
+    value:
+      window.localStorage.getItem("flipUpsideDown") === "false" ? false : true,
   },
   reflectSides: {
     type: "checkbox",
-    value: localStorage.getItem("reflectSides") === "true" ? true : false,
+    value:
+      window.localStorage.getItem("reflectSides") === "true" ? true : false,
   },
 };
 const params = JSON.parse(JSON.stringify(defaultParams));
@@ -91,7 +93,7 @@ export function initControls(controlsElement) {
       inputElement.addEventListener("input", (e) => {
         c.value = e.target.value;
         valueElement.innerHTML = c.value;
-        localStorage.setItem(key, c.value);
+        window.localStorage.setItem(key, c.value);
       });
       inputElements.push(inputElement);
       //
@@ -102,7 +104,7 @@ export function initControls(controlsElement) {
       inputElement.addEventListener("input", (e) => {
         c.value = e.target.checked;
         valueElement.innerHTML = c.value;
-        localStorage.setItem(key, c.value);
+        window.localStorage.setItem(key, c.value);
       });
       inputElements.push(inputElement);
       //
