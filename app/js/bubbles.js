@@ -19,7 +19,7 @@ for (i = 0; i < bubbleCount; i++) {
   bubbleElContent = document.createTextNode("");
   bubbleEl.appendChild(bubbleElContent);
 
-  const bubbleSize = Math.round(2 + Math.random() * 3);
+  const bubbleSize = Math.round(2 + Math.random() * 2);
   bubbleEl.setAttribute(
     "style",
     `width: ${bubbleSize}px; height:${bubbleSize}px;`
