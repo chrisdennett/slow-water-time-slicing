@@ -1,0 +1,46 @@
+#fish-tank {
+  /* background-color: #c7ddff; */
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+}
+
+#bubble-field {
+  width: 100%;
+  height: 100%;
+  /* text-align: center; */
+  position: relative;
+  overflow: hidden;
+}
+
+.bubble {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: inline-block;
+  animation: bubble 2s ease 0s infinite normal;
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-1000px);
+    -webkit-transform: translateY(-1000px);
+    -moz-transform: translateY(-1000px);
+    -ms-transform: translateY(-1000px);
+    -o-transform: translateY(-1000px);
+  }
+}
+
+.bubble-rise {
+  position: relative;
+  display: inline-block;
+  /* margin: 15px; */
+  top: 100%;
+  animation: bubble-rise 2s cubic-bezier(0.3, 0, 0.7, 0.75) 0s infinite normal;
+}
