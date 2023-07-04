@@ -60,7 +60,7 @@ canvas {
 }
 
 /* HIDE THE VIDEO */
-#videoElement {
+#webcam1Element {
   background-color: #666;
   display: none;
   position: absolute;

@@ -1,22 +1,29 @@
 import { getFlippedVideoCanvas } from "./utils/getFlippedVideoCanvas.js";
 import { initControls } from "./controls.js";
 import { drawTimeSlicedCanvas } from "./utils/drawTimeSlicedCanvas.js";
+import { startWebcam } from "./utils/startWebcam.js";
 
 // TV is 1920x1080
+const webcamRes = { w: 640, h: 360 };
+// let videoDimensions = { width: 1920, height: 1080 };
+// let videoDimensions = { width: 640, height: 360 };
+let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
+// let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // app elements
 const appElement = document.querySelector("#app");
 const controls = document.querySelector("#controls");
 const artCanvas = document.querySelector("#artCanvas");
-const video = document.querySelector("#videoElement");
+const webcam1Elem = document.querySelector("#webcam1Elem");
+const webcam2Elem = document.querySelector("#webcam2Elem");
+const webcam1 = await startWebcam(webcam1Elem, videoDimensions, 0);
+const webcam2 = await startWebcam(webcam2Elem, videoDimensions, 1);
+
+let currWebcam = webcam1;
 
 // set up controls
 const params = initControls(controls);
 
-// let videoDimensions = { width: 1920, height: 1080 };
-// let videoDimensions = { width: 640, height: 360 };
-let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
-// let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // global variables
 const sliceArray = [];
@@ -36,7 +43,11 @@ export function setup() {
   controls.style.display = "none";
 
   // keyboard controls
-  // document.addEventListener("keydown", onKeyDown);
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "w"){
+      currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
+    }
+  });
 
   function onAppRightClick(e) {
     e.preventDefault();
@@ -46,25 +57,12 @@ export function setup() {
       controls.style.display = "none";
     }
   }
-
-  if (navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: videoDimensions,
-      })
-      .then(function (stream) {
-        video.srcObject = stream;
-      })
-      .catch(function (error) {
-        console.log("video error: ", error);
-      });
-  }
 }
 
 // draw loop
 export function draw() {
   const frameCanvas = getFlippedVideoCanvas({
-    video,
+    video: currWebcam,
     videoDimensions,
     count,
     useTint: params.useTint.value,
