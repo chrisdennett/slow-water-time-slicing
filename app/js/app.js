@@ -47,6 +47,10 @@ export function setup() {
     if(e.key === "w"){
       currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
     }
+
+    if(e.key === "r"){
+      location.reload();
+    }
   });
 
   function onAppRightClick(e) {
