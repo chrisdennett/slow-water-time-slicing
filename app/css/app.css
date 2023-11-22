@@ -8,16 +8,35 @@ body {
 }
 
 #overlay {
-  background: rgb(0, 0, 0);
-  background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.4) 20%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background-image: url("../img/slow-water-border_1920x1080.png");
   height: 100vh;
   width: 100%;
   position: absolute;
+  opacity: 0.6;
+  /* background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.1) 5%,
+    rgba(0, 0, 0, 0.8) 90%,
+    rgba(0, 0, 0, 1) 100%
+  ); */
+  display: flex;
+  align-items: flex-start;
+}
+
+#overlayText {
+  /* color: orange; */
+  font-size: 50px;
+  mix-blend-mode: color-burn;
+  opacity: 0.4;
+  text-align: center;
+  position: fixed;
+  /* padding-top: 70px; */
+  bottom: 181px;
+  left: -58px;
+  rotate: 56deg;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
 canvas {
@@ -64,4 +83,9 @@ canvas {
   background-color: #666;
   display: none;
   position: absolute;
+  visibility: hidden;
+}
+
+video {
+  visibility: hidden;
 }

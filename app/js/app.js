@@ -11,13 +11,13 @@ let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.7
 // let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // app elements
-const appElement = document.querySelector("#app");
+// const appElement = document.querySelector("#app");
 const controls = document.querySelector("#controls");
 const artCanvas = document.querySelector("#artCanvas");
 const webcam1Elem = document.querySelector("#webcam1Elem");
-const webcam2Elem = document.querySelector("#webcam2Elem");
+// const webcam2Elem = document.querySelector("#webcam2Elem");
 const webcam1 = await startWebcam(webcam1Elem, videoDimensions, 0);
-const webcam2 = await startWebcam(webcam2Elem, videoDimensions, 1);
+// const webcam2 = await startWebcam(webcam2Elem, videoDimensions, 1);
 
 let currWebcam = webcam1;
 
@@ -38,14 +38,14 @@ const ctx = artCanvas.getContext("2d", { alpha: false });
 // set up controls, webcam etc
 export function setup() {
   // hide controls by default and if app is right clicked
-  appElement.addEventListener("contextmenu", onAppRightClick);
+  // appElement.addEventListener("contextmenu", onAppRightClick);
   controls.style.display = "none";
 
   // keyboard controls
   document.addEventListener("keydown", (e) => {
-    if (e.key === "w") {
-      currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
-    }
+    // if (e.key === "w") {
+    //   currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
+    // }
 
     if (e.key === "r") {
       location.reload();
@@ -55,11 +55,6 @@ export function setup() {
       toggleControls();
     }
   });
-
-  function onAppRightClick(e) {
-    e.preventDefault();
-    toggleControls();
-  }
 }
 
 function toggleControls() {
