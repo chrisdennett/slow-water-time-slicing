@@ -5,7 +5,7 @@ const defaultParams = {
   totalSlices: {
     type: "slider",
     min: 2,
-    max: 1000,
+    max: 500,
     step: 1,
     value: window.localStorage.getItem("totalSlices") || 185,
   },
@@ -15,10 +15,6 @@ const defaultParams = {
     max: 1,
     step: 0.01,
     value: window.localStorage.getItem("alpha") || 0.3,
-  },
-  useSideSlice: {
-    type: "checkbox",
-    value: false,
   },
   useTint: {
     type: "checkbox",
@@ -37,6 +33,10 @@ const defaultParams = {
     max: 360,
     step: 1,
     value: window.localStorage.getItem("maxHue") || 193,
+  },
+  useSideSlice: {
+    type: "checkbox",
+    value: false,
   },
   effectType: {
     type: "radio",

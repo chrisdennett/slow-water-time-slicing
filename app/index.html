@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Time Slicing Again</title>
+    <link rel="stylesheet" href="css/global-reset.css" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/bubbleStyles.css" />
+  </head>
 
-<head>
-  <title>Time Slicing Again</title>
-  <link rel="stylesheet" href="css/global-reset.css" />
-  <link rel="stylesheet" href="css/app.css" />
-  <link rel="stylesheet" href="css/bubbleStyles.css" />
-</head>
+  <body>
+    <div id="container">
+      <main id="app">
+        <!-- CONTROLS -->
+        <div id="controls"></div>
 
-<body>
-  <div id="container">
-    <main id="app">
-      <!-- CONTROLS -->
-      <div id="controls"></div>
+        <div id="fish-tank">
+          <div id="bubble-field"></div>
+        </div>
 
-      <div id="fish-tank">
-        <div id="bubble-field"></div>
-      </div>
+        <div id="overlay"></div>
 
-      <div id="overlay"></div>
+        <!-- VERTICAL CANVAS -->
+        <canvas id="artCanvas"></canvas>
 
-      <!-- VERTICAL CANVAS -->
-      <canvas id="artCanvas"></canvas>
+        <!-- WEB CAM (hidden) -->
+        <video autoplay="true" hidden id="webcam1Elem"></video>
+        <video autoplay="true" hidden id="webcam2Elem"></video>
 
-      <!-- WEB CAM (hidden) -->
-      <video autoplay="true" hidden id="webcam1Elem"></video>
-      <video autoplay="true" hidden id="webcam2Elem"></video>
-
-      <audio autoplay loop id="audioPlayer">
+        <!-- <audio autoplay loop id="audioPlayer">
         <source src="./audio/SQUID_SQUAD_SOUNDSCAPE.ogg" type="audio/ogg">
-      </audio>
-    </main>
-  </div>
+      </audio> -->
+      </main>
+    </div>
 
-  <script type="module" src="./js/index.js"></script>
-  <script src="./js/bubbles.js"></script>
-
-</body>
-
+    <script type="module" src="./js/index.js"></script>
+    <script src="./js/bubbles.js"></script>
+  </body>
 </html>

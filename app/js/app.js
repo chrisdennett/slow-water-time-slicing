@@ -24,7 +24,6 @@ let currWebcam = webcam1;
 // set up controls
 const params = initControls(controls);
 
-
 // global variables
 const sliceArray = [];
 let currMinHue = params.minHue.value; //176;
@@ -40,15 +39,15 @@ const ctx = artCanvas.getContext("2d", { alpha: false });
 export function setup() {
   // hide controls by default and if app is right clicked
   appElement.addEventListener("contextmenu", onAppRightClick);
-  controls.style.display = "none";
+  // controls.style.display = "none";
 
   // keyboard controls
   document.addEventListener("keydown", (e) => {
-    if(e.key === "w"){
+    if (e.key === "w") {
       currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
     }
 
-    if(e.key === "r"){
+    if (e.key === "r") {
       location.reload();
     }
   });
