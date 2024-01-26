@@ -4,7 +4,7 @@ import { drawTimeSlicedCanvas } from "./utils/drawTimeSlicedCanvas.js";
 import { startWebcam } from "./utils/startWebcam.js";
 
 // TV is 1920x1080
-const webcamRes = { w: 640, h: 360 };
+// const webcamRes = { w: 640, h: 360 };
 // let videoDimensions = { width: 1920, height: 1080 };
 // let videoDimensions = { width: 640, height: 360 };
 let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
@@ -15,9 +15,7 @@ const appElement = document.querySelector("#app");
 const controls = document.querySelector("#controls");
 const artCanvas = document.querySelector("#artCanvas");
 const webcam1Elem = document.querySelector("#webcam1Elem");
-const webcam2Elem = document.querySelector("#webcam2Elem");
 const webcam1 = await startWebcam(webcam1Elem, videoDimensions, 0);
-const webcam2 = await startWebcam(webcam2Elem, videoDimensions, 1);
 
 let currWebcam = webcam1;
 
@@ -38,7 +36,7 @@ const ctx = artCanvas.getContext("2d", { alpha: false });
 // set up controls, webcam etc
 export function setup() {
   // hide controls by default and if app is right clicked
-  appElement.addEventListener("contextmenu", onAppRightClick);
+  appElement.addEventListener("doubleclick", onAppRightClick);
   // controls.style.display = "none";
 
   // keyboard controls
@@ -72,6 +70,10 @@ export function draw() {
     flipUpsideDown: params.flipUpsideDown.value,
   });
 
+  const effectType = params.effectType.value;
+  const totalSlices = params.totalSlices.value;
+  const isGrid = effectType === "grid";
+
   if (params.useTint.value) {
     count += inc;
     if (currMinHue !== parseInt(params.minHue.value)) {
@@ -94,13 +96,19 @@ export function draw() {
 
   sliceArray.unshift(frameCanvas);
 
-  while (sliceArray.length > params.totalSlices.value) {
+  while (sliceArray.length > totalSlices) {
     sliceArray.pop();
+  }
+
+  console.log("artCanvas.width: ", artCanvas.width);
+  if (isGrid) {
+    artCanvas.width = videoDimensions.width * 2;
+    artCanvas.height = videoDimensions.height * 2;
   }
 
   if (
     !disjointedOrder ||
-    sliceArray.length !== parseInt(params.totalSlices.value) ||
+    sliceArray.length !== parseInt(totalSlices) ||
     disjointedOrder.length !== sliceArray.length
   ) {
     disjointedOrder = [...sliceArray.keys()];
@@ -112,11 +120,12 @@ export function draw() {
     osCtx,
     ctx,
     sliceArray,
+    totalSlices,
     canvasDimensions: { w: frameCanvas.width, h: frameCanvas.height },
     alpha: params.alpha.value,
     reflectSides: params.reflectSides.value,
     useSideSlice: params.useSideSlice.value,
-    effectType: params.effectType.value,
+    effectType,
     disjointedOrder,
   });
 

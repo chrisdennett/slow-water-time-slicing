@@ -8,6 +8,7 @@ body {
 }
 
 #overlay {
+  display: none;
   background: rgb(0, 0, 0);
   background: radial-gradient(
     circle,
@@ -24,6 +25,7 @@ canvas {
   height: 100vh;
   object-fit: cover;
   margin: auto;
+  /* border-radius: 150px; */
 }
 
 #controls {

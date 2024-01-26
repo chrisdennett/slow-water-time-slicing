@@ -25,14 +25,14 @@ const defaultParams = {
     min: 0,
     max: 360,
     step: 1,
-    value: window.localStorage.getItem("minHue") || 162,
+    value: window.localStorage.getItem("minHue") || 0,
   },
   maxHue: {
     type: "slider",
     min: 0,
     max: 360,
     step: 1,
-    value: window.localStorage.getItem("maxHue") || 193,
+    value: window.localStorage.getItem("maxHue") || 360,
   },
   useSideSlice: {
     type: "checkbox",
@@ -40,8 +40,8 @@ const defaultParams = {
   },
   effectType: {
     type: "radio",
-    options: ["flow", "disjointed", "jitter"],
-    value: window.localStorage.getItem("effectType") || "flow",
+    options: ["flow", "disjointed", "jitter", "grid"],
+    value: window.localStorage.getItem("effectType") || "grid",
   },
   flipUpsideDown: {
     type: "checkbox",
