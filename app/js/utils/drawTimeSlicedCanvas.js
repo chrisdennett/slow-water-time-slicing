@@ -32,8 +32,8 @@ export function drawTimeSlicedCanvas({
   if (effectType === "jitter") {
     sliceArray.sort(() => Math.random() - 0.5);
   } else if (effectType === "grid") {
-    offscreenCanvas.width = w * 2;
-    offscreenCanvas.height = h * 2;
+    // offscreenCanvas.width = w * 2;
+    // offscreenCanvas.height = h * 2;
     const cellSize = calculateCellSize(
       totalSlices,
       offscreenCanvas.width,

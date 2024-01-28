@@ -7,7 +7,7 @@ const defaultParams = {
     min: 2,
     max: 500,
     step: 1,
-    value: window.localStorage.getItem("totalSlices") || 185,
+    value: window.localStorage.getItem("totalSlices") || 24,
   },
   alpha: {
     type: "slider",
@@ -41,7 +41,7 @@ const defaultParams = {
   effectType: {
     type: "radio",
     options: ["flow", "disjointed", "jitter", "grid"],
-    value: window.localStorage.getItem("effectType") || "grid",
+    value: window.localStorage.getItem("effectType") || "flow",
   },
   flipUpsideDown: {
     type: "checkbox",

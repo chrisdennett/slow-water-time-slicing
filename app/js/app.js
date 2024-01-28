@@ -7,7 +7,8 @@ import { startWebcam } from "./utils/startWebcam.js";
 // const webcamRes = { w: 640, h: 360 };
 // let videoDimensions = { width: 1920, height: 1080 };
 // let videoDimensions = { width: 640, height: 360 };
-let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
+// let videoDimensions = { width: 480, height: 270 }; // tv res divided by 4 // 1.778
+let videoDimensions = { width: 960, height: 540 }; // tv res divided by 4 // 1.778
 // let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // app elements
@@ -100,11 +101,10 @@ export function draw() {
     sliceArray.pop();
   }
 
-  console.log("artCanvas.width: ", artCanvas.width);
-  if (isGrid) {
-    artCanvas.width = videoDimensions.width * 2;
-    artCanvas.height = videoDimensions.height * 2;
-  }
+  // if (isGrid) {
+  //   artCanvas.width = videoDimensions.width * 2;
+  //   artCanvas.height = videoDimensions.height * 2;
+  // }
 
   if (
     !disjointedOrder ||

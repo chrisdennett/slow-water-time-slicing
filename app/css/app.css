@@ -22,10 +22,23 @@ body {
 }
 
 canvas {
+  /* position: fixed;
+  left: 700px;
+  top: 300px; */
   height: 100vh;
   object-fit: cover;
-  margin: auto;
+  /* margin: auto;  */
   /* border-radius: 150px; */
+}
+
+/* HIDE THE VIDEO */
+#webcam1Elem {
+  position: fixed;
+  /* left: 100px;
+  top: 300px; */
+  max-width: 480px;
+  background-color: #666;
+  display: none;
 }
 
 #controls {
@@ -59,11 +72,4 @@ canvas {
 
 .control span {
   margin-left: 10px;
-}
-
-/* HIDE THE VIDEO */
-#webcam1Element {
-  background-color: #666;
-  display: none;
-  position: absolute;
 }

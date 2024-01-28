@@ -24,6 +24,19 @@ export async function startWebcam(video, size, camIndex = 0) {
   }
 }
 
+function attachWebcam() {
+  var video = document.querySelector("#videoElement");
+
+  navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+    video.srcObject = stream;
+  });
+
+  const canvas = document.querySelector("#canvas");
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0);
+}
+
 async function listWebcams() {
   return new Promise((resolve) => {
     navigator.mediaDevices.enumerateDevices().then(function (devices) {
