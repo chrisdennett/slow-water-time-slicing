@@ -12,7 +12,7 @@ let videoDimensions = { width: 960, height: 540 }; // tv res divided by 4 // 1.7
 // let videoDimensions = { width: 1280, height: 720 }; // tv res divided by 4
 
 // app elements
-const appElement = document.querySelector("#app");
+// const appElement = document.querySelector("#app");
 const controls = document.querySelector("#controls");
 const artCanvas = document.querySelector("#artCanvas");
 const webcam1Elem = document.querySelector("#webcam1Elem");
@@ -37,27 +37,33 @@ const ctx = artCanvas.getContext("2d", { alpha: false });
 // set up controls, webcam etc
 export function setup() {
   // hide controls by default and if app is right clicked
-  appElement.addEventListener("doubleclick", onAppRightClick);
-  // controls.style.display = "none";
+  // appElement.addEventListener("contextmenu", onAppRightClick);
+  controls.style.display = "none";
 
   // keyboard controls
   document.addEventListener("keydown", (e) => {
     if (e.key === "w") {
       currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
     }
+    // if (e.key === "w") {
+    //   currWebcam = currWebcam === webcam1 ? webcam2 : webcam1;
+    // }
 
     if (e.key === "r") {
       location.reload();
     }
-  });
 
-  function onAppRightClick(e) {
-    e.preventDefault();
-    if (controls.style.display === "none") {
-      controls.style.display = "inherit";
-    } else {
-      controls.style.display = "none";
+    if (e.key === "x") {
+      toggleControls();
     }
+  });
+}
+
+function toggleControls() {
+  if (controls.style.display === "none") {
+    controls.style.display = "inherit";
+  } else {
+    controls.style.display = "none";
   }
 }
 
